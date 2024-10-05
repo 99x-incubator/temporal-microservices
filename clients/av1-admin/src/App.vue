@@ -10,7 +10,6 @@
         >
           <span>
             ({{ robot.id }}) {{ robot.name }}  <small v-if="robot.disabled" class="text-danger">(Disabled)</small>
-            ({{ robot.id }}) {{ robot.name }}  <small v-if="robot.disabled" class="text-danger">(Disabled)</small>
           </span>
           <button
             v-if="!robot.disabled"
