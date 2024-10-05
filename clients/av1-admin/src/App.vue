@@ -9,7 +9,7 @@
           class="list-group-item d-flex justify-content-between align-items-center"
         >
           <span>
-            {{ robot.name }} <small v-if="robot.disabled" class="text-danger">(Disabled)</small>
+            ({{ robot.id }}) {{ robot.name }}  <small v-if="robot.disabled" class="text-danger">(Disabled)</small>
           </span>
           <button
             v-if="!robot.disabled"
@@ -69,6 +69,8 @@ export default {
   },
   methods: {
     async disableRobot(robotId) {
+      this.notification = ''; // Clear previous notification
+      
       // Call the /disable_robot endpoint of the gateway microservice
       const response = await axios.post('http://localhost:8081/disable_robot', {
         robot_id: robotId.toString(),
@@ -80,15 +82,7 @@ export default {
       }
 
       const robot = this.robots.find((r) => r.id === robotId);
-
-      // Simulating async operation
-      this.notification = ''; // Clear previous notification
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
       robot.disabled = true;
-
-      // Set notification after disabling robot
-      //this.notification = `Robot '${robot.name}' has been disabled.`;
     },
   },
 };
