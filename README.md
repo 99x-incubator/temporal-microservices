@@ -6,7 +6,7 @@ See the [Architecture](architecture.md) for technical information. Below are the
 
 ## Running Temporal Cluster
 
-To run the Temporal cluster, navigate to the `temporal/cluster/docker-compose` directory and run the following commands:
+To run the Temporal cluster, navigate to the `temporal/cluster` directory and run the following commands:
 
 [This folder contains a clone from the [temporalio/docker-compose](https://github.com/temporalio/docker-compose) GitHub repository]
 
