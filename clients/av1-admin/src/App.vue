@@ -69,9 +69,6 @@ export default {
   },
   methods: {
     async disableRobot(robotId) {
-      // Simulating async operation
-      this.notification = ''; // Clear previous notification
-
       // Call the /disable_robot endpoint of the gateway microservice
       const response = await axios.post('http://localhost:8081/disable_robot', {
         robot_id: robotId.toString(),
