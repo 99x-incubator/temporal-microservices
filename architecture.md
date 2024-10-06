@@ -1,6 +1,6 @@
 # Reference Architecture Overview
 
-This document outlines a microservices-based reference architecture designed to handle distributed transactions, asynchronous processing, and workflow orchestration using Temporal.io. The architecture incorporates key components like a Vue.js frontend, an API Gateway, and dedicated microservices with independent databases. It leverages patterns such as the Saga pattern for distributed transaction management, retries with exponential backoff, and long-running async workflows. 
+This document outlines a microservices-based reference architecture designed to handle distributed transactions, asynchronous processing, and workflow orchestration using Temporal.io. The architecture incorporates key components like a Vue.js frontend, an API Gateway, and dedicated microservices with independent databases. It leverages patterns such as the Saga pattern for distributed transaction management, retries with exponential backoff, and long-running async workflows.
 
 ## Architecture Components
 
@@ -172,3 +172,7 @@ sequenceDiagram
 - **Distributed Tracing**: Not in scope.
 - **Access Token**: Security by API Gateway, back office Microservices are not secured.
 - **Central Exception Tracking**: Not included.
+
+## Further Improvements
+
+To see the further improvements proposed, please refer to the [improvements.md](improvements.md) file.
