@@ -1,4 +1,4 @@
-# Design Improvements Proposed
+# Architecture/Design Improvements Proposed
 
 ## 1.Client Layer (Vue.js Frontend)
 
