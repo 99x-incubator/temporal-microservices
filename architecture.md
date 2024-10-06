@@ -150,12 +150,8 @@ sequenceDiagram
     end
 
     Temporal Orchestrator->>Notification Service: Send Notification to User
-    Notification Service-->>Temporal Orchestrator: Notification Sent
-
-    Temporal Orchestrator->>API Gateway: Return Order Result (Final Result)
-    API Gateway->>Notification Service: Send Order Confirmation/Failure (Final Response)
     Notification Service->>Vue.js: Async Notification of Order Status
-
+    Notification Service-->>Temporal Orchestrator: Notification Sent
 ```
 
 ## Patterns and Practices
