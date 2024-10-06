@@ -46,7 +46,7 @@ This document outlines a microservices-based reference architecture designed to 
 
 - **Docker Containers**: All components, including the API Gateway, microservices, Temporal workers, and Temporal server, are containerized using Docker.
   
-- **Docker Compose**: Docker Compose is used for orchestrating and managing the deployment of these containers, ensuring a modular, scalable architecture.
+- **Docker Compose**: Docker Compose is used to orchestrate and manage the deployment of these containers, ensuring a modular, scalable architecture.
 
 ## Architecture Flow
 
@@ -123,8 +123,11 @@ sequenceDiagram
     participant Order Service
     participant Inventory Service
     participant Payment Service
+    participant Notification Service
 
     Vue.js->>API Gateway: Send Order Request
+    API Gateway->>Vue.js: Acknowledge Order Received (Initial Response)
+
     API Gateway->>Temporal Orchestrator: Start Order Workflow
     Temporal Orchestrator->>Order Service: Create Order
     Order Service-->>Temporal Orchestrator: Order Created
@@ -146,8 +149,13 @@ sequenceDiagram
         Temporal Orchestrator->>Inventory Service: Release Product if retry fails
     end
 
-    Temporal Orchestrator->>API Gateway: Return Order Result
-    API Gateway->>Vue.js: Send Order Confirmation/Failure
+    Temporal Orchestrator->>Notification Service: Send Notification to User
+    Notification Service-->>Temporal Orchestrator: Notification Sent
+
+    Temporal Orchestrator->>API Gateway: Return Order Result (Final Result)
+    API Gateway->>Vue.js: Send Order Confirmation/Failure (Final Response)
+    Notification Service->>Vue.js: Async Notification of Order Status
+
 ```
 
 ## Patterns and Practices
