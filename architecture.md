@@ -113,7 +113,7 @@ Each microservice interacts with its own database, storing or retrieving data. F
 
 Upon completion or compensation of the workflow, the API Gateway sends the result back to the Vue frontend.
 
-## Temporal Workflow with Circuit Breakers and Retry
+## Async Temporal Workflow with Retry
 
 ```mermaid
 sequenceDiagram
