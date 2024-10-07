@@ -88,7 +88,7 @@ This will start a worker that listens for tasks from the Temporal cluster and pr
 
 ## Running Web Client Application
 
-To run the client application, navigate to the `client/av1-admin` directory and run the following commands:
+To run the client application, navigate to the `clients/av1-admin` directory and run the following commands:
 
 ```bash
 npm install
