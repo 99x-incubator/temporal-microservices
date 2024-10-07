@@ -162,12 +162,13 @@ sequenceDiagram
 - **Retry with Exponential Backoff**: Automatic retries with progressive delays.
 - **API Gateway/BFF**: Central point for client requests.
 - **Database per Service**: Independent databases for each service.
-- **Circuit Breaker**: Managed via Temporal workflows.
+- **Event Sourcing**: Every state change will be documented in Temporal.
+- **Central Exception Tracking**: Not included.
 
 ### Not in Use
 
-- **Event Sourcing**: Every state change will be documented in Temporal.
-- **Shared Database**: Each service has its own database.
+- **Circuit Breaker**: Managed via Temporal workflows.
+- **Shared Database**: Each service has its database.
 - **CQRS (Command Query Responsibility Segregation)**. Data is not separated for read and write operations.
 - **Choreography**: Orchestration is preferred.
 - **Externalized Configuration**: No external service to manage configurations.
@@ -175,7 +176,7 @@ sequenceDiagram
 - **Service Discovery**: Services are invoked directly.
 - **Distributed Tracing**: Not in scope.
 - **Access Token**: Security by API Gateway, back office Microservices are not secured.
-- **Central Exception Tracking**: Not included.
+
 
 ## Further Improvements
 
