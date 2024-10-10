@@ -5,6 +5,8 @@ import (
 
 	admin_workflows "99x.io/admin_gateway/workflows"
 
+	"99x.io/shared/vars"
+
 	"go.temporal.io/sdk/client"
 	"go.temporal.io/sdk/worker"
 )
@@ -18,7 +20,7 @@ func main() {
 	defer c.Close()
 
 	// Create a worker for the task queue
-	w := worker.New(c, "ADMIN_TASK_QUEUE", worker.Options{})
+	w := worker.New(c, vars.TaskQueue, worker.Options{})
 
 	// Register the workflow and activity
 	w.RegisterWorkflow(admin_workflows.DisableRobotWorkflow)
