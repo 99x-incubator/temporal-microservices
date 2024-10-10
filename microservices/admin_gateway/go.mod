@@ -5,7 +5,10 @@ go 1.23.2
 require (
 	github.com/gorilla/mux v1.8.1
 	go.temporal.io/sdk v1.29.1
+	99x.io/shared v0.0.0
 )
+
+replace 99x.io/shared v0.0.0 => ../../shared
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect

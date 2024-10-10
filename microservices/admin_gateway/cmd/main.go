@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"99x.io/admin_gateway/workflows"
+	"99x.io/shared/vars"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 	"go.temporal.io/sdk/client"
@@ -29,8 +30,8 @@ func disableRobotHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	workflowOptions := client.StartWorkflowOptions{
-		ID:        "disable_robot_workflow_" + req.RobotID,
-		TaskQueue: "ADMIN_TASK_QUEUE",
+		ID:        vars.WorkflowID + req.RobotID,
+		TaskQueue: vars.TaskQueue,
 	}
 
 	// Start the workflow for disabling the robot
