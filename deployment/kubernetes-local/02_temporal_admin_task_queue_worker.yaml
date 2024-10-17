@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: worker
+  namespace: temporal
+  labels:
+    app/name: worker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app/name: worker
+  template:
+    metadata:
+      labels:
+        app/name: worker
+    spec:
+      containers:
+      - name: worker
+        image: admin_worker:latest
+        imagePullPolicy: Never
+        env:
+        - name: TEMPORAL_SERVER
+          value: "temporal-frontend:7233"
+        - name: NOTIFY_SERVER
+          value: "http://notification-service.99x.svc.cluster.local/notify"

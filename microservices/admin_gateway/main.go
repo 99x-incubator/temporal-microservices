@@ -1,15 +1,18 @@
 package main
 
 import (
+	"fmt"
+	"os"
 	"context"
 	"encoding/json"
 	"log"
 	"net/http"
 
-	"99x.io/admin_gateway/workflows"
+	"99x.io/workflows"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 	"go.temporal.io/sdk/client"
+	"github.com/hellofresh/health-go/v5"
 )
 
 type DisableRequest struct {
@@ -17,7 +20,7 @@ type DisableRequest struct {
 	UserID  string `json:"user_id"`
 }
 
-var temporalClient client.Client
+var temporalClient client.Client   
 
 // REST endpoint to disable a robot
 func disableRobotHandler(w http.ResponseWriter, r *http.Request) {
@@ -51,9 +54,36 @@ func disableRobotHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+
+	var temporal_server = "localhost:7233"
+	var client_cors = "http://localhost:8083"
+	
+	// read from env. location of the temporal server , client CORS
+	val, ok := os.LookupEnv("TEMPORAL_SERVER")
+	if ok {
+		temporal_server = val
+	}
+	fmt.Printf("%s=%s\n", "TEMPORAL_SERVER", temporal_server)
+	val, ok = os.LookupEnv("CLIENT_CORS")
+	if ok {
+		client_cors = val
+	}
+	fmt.Printf("%s=%s\n", "CLIENT_CORS", client_cors)
+	
+
+    //health
+	//probe need to add checks which looks at visibility of the temporal 
+	h, _ := health.New(health.WithComponent(health.Component{
+		Name:    "admin_gateway",
+		Version: "v1.0",
+	}))
+
+
 	// Set up Temporal client
 	var err error
-	temporalClient, err = client.NewLazyClient(client.Options{})
+	temporalClient, err = client.NewLazyClient(client.Options{
+			HostPort: temporal_server,
+		})
 	if err != nil {
 		log.Fatalln("Unable to create Temporal client", err)
 	}
@@ -63,9 +93,11 @@ func main() {
 	r := mux.NewRouter()
 	r.HandleFunc("/disable_robot", disableRobotHandler).Methods("POST")
 
+	r.HandleFunc("/status", h.HandlerFunc).Methods("GET")
+
 	// Enable CORS
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:8083"}, // Replace with your frontend URL
+		AllowedOrigins:   []string{client_cors}, // Replace with your frontend URL
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
 		AllowedHeaders:   []string{"Content-Type"},
 		AllowCredentials: true,

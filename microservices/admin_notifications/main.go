@@ -8,6 +8,7 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
+	"github.com/hellofresh/health-go/v5"
 )
 
 // Client represents a single WebSocket connection with a specific userID
@@ -103,7 +104,10 @@ func sendNotification(w http.ResponseWriter, r *http.Request) {
 	hub.Mutex.Unlock()
 
 	if !exists {
-		http.Error(w, "User not connected", http.StatusNotFound)
+		//http.Error(w, "User not connected", http.StatusNotFound)
+		log.Println("User no where to be found :'(. please add this to the workflow state: " + notification.UserID)
+		w.Write([]byte("User no where to be found :'(. please add this to the workflow state: " + notification.UserID))
+		w.WriteHeader(http.StatusOK)
 		return
 	}
 
@@ -119,15 +123,35 @@ func sendNotification(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("Notification sent to user: " + notification.UserID))
 }
 
+func loggingMiddleware(next http.Handler) http.Handler {
+    return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+        // Do stuff here
+        log.Println(r.RequestURI)
+        // Call the next handler, which can be another middleware in the chain, or the final handler.
+        next.ServeHTTP(w, r)
+    })
+}
+
 func main() {
 	// Create a new router
 	r := mux.NewRouter()
+	r.Use(loggingMiddleware)
 
 	// WebSocket connection endpoint
 	r.HandleFunc("/ws", handleWebSocket).Methods("GET")
 
 	// HTTP endpoint to send a notification
 	r.HandleFunc("/notify", sendNotification).Methods("POST")
+
+	//health check
+	//health
+	h, _ := health.New(health.WithComponent(health.Component{
+		Name:    "admin_notifcation",
+		Version: "v1.0",
+	}))
+
+	r.HandleFunc("/status", h.HandlerFunc).Methods("GET")
+
 
 	// Start the server
 	log.Println("Notification service started on :8082")
