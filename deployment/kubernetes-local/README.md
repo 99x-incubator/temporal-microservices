@@ -37,7 +37,10 @@ at this point we are not using a container registry, so the local images needs t
 	- deployment/kubernetes-local/04_admin_notification.yaml
 	- deployment/kubernetes-local/05_admin_web.yaml
 
-  
+  ---
+  resulting deployment 
+
+  ![resulting deployment ](./doc/temporal_v1.png)
   
   
 ---
