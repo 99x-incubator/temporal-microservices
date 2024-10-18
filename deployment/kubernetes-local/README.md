@@ -2,7 +2,7 @@
 # Temporal kubernetes deployment
 
 
-!**Work in process.**
+!**Work in Progress.**
 
   
 
