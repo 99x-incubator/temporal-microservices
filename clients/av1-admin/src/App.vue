@@ -54,7 +54,8 @@ export default {
   },
   mounted() {
     // Establish a WebSocket connection with the userID as a query parameter
-    const socket = new WebSocket(`ws://localhost:8082/ws?userID=${this.userID}`);
+    var loc = window.location
+    const socket = new WebSocket(`ws://` + loc.host + `/notification/ws?userID=${this.userID}`);
 
     socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
@@ -72,7 +73,7 @@ export default {
       this.notification = ''; // Clear previous notification
       
       // Call the /disable_robot endpoint of the gateway microservice
-      const response = await axios.post('http://localhost:8081/disable_robot', {
+      const response = await axios.post('api/disable_robot', {
         robot_id: robotId.toString(),
         user_id: this.userID,
       });

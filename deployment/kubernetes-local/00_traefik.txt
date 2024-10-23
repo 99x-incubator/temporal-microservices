@@ -1,0 +1,7 @@
+
+-- deploying traefik service type setting as node port since this is local
+
+helm upgrade traefik oci://ghcr.io/traefik/helm/traefik --set service.type=NodePort  --namespace traefik
+
+
+--set providers.kubernetesIngress.allowExternalNameServices=true

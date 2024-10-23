@@ -1,10 +1,6 @@
-module 99x.io/workers
+module 99x.io/workflows
 
 go 1.23.2
-
-require 99x.io/workflows v0.0.0
-
-replace 99x.io/workflows v0.0.0 => ../../temporal/workflows
 
 require go.temporal.io/sdk v1.29.1
 

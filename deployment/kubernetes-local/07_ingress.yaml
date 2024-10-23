@@ -1,0 +1,59 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: robo
+  namespace: 99x
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: 99x-robo-stripprefix@kubernetescrd
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /  # root will be given to the web app 
+        pathType: Prefix
+        backend:
+          service:
+            name: adminweb-service
+            port:
+              name: http
+      - path: /api
+        pathType: Prefix
+        backend:
+          service:
+            name: gateway-service
+            port:
+              name: http
+      - path: /notification
+        pathType: Prefix
+        backend:
+          service:
+            name: notification-service
+            port:
+              name: http
+      - path: /temporal
+        pathType: Prefix
+        backend:
+          service:
+            name: temporal-web-external
+            port:
+              name: http
+
+---
+
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: robo-stripprefix
+  namespace: 99x
+spec:
+  stripPrefix:
+    prefixes:
+      - /notification
+      - /api
+
+
+
+
+
+# kubectl port-forward -n traefik service/traefik 8088:web
+# web app http://localhost:8088/

@@ -1,6 +1,7 @@
 package workflows
 
 import (
+	"os"
 	"bytes"
 	"context"
 	"encoding/json"
@@ -78,7 +79,18 @@ func SendNotificationActivity(ctx context.Context, notification NotificationMess
 	}
 
 	// Send the notification as an HTTP POST request
-	resp, err := http.Post("http://localhost:8082/notify", "application/json", bytes.NewBuffer(jsonData))
+
+	// where to send the notification 
+	var notify_server = "http://localhost:8082/notify"
+	
+	// read from env. location of the temporal server , client CORS
+	val, ok := os.LookupEnv("NOTIFY_SERVER")
+	if ok {
+		notify_server = val
+	}
+	fmt.Printf("%s=%s\n", "NOTIFY_SERVER", notify_server)
+
+	resp, err := http.Post(notify_server, "application/json", bytes.NewBuffer(jsonData))
 	if err != nil {
 		return fmt.Errorf("failed to send notification: %w", err)
 	}

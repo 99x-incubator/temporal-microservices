@@ -2,8 +2,14 @@ module 99x.io/admin_gateway
 
 go 1.23.2
 
+require 99x.io/workflows v0.0.0
+
+replace 99x.io/workflows v0.0.0 => ../../temporal/workflows
+
 require (
 	github.com/gorilla/mux v1.8.1
+	github.com/hellofresh/health-go/v5 v5.5.3
+	github.com/rs/cors v1.11.1
 	go.temporal.io/sdk v1.29.1
 )
 
@@ -19,9 +25,10 @@ require (
 	github.com/pborman/uuid v1.2.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/robfig/cron v1.2.0 // indirect
-	github.com/rs/cors v1.11.1 // indirect
 	github.com/stretchr/objx v0.5.2 // indirect
 	github.com/stretchr/testify v1.9.0 // indirect
+	go.opentelemetry.io/otel v1.24.0 // indirect
+	go.opentelemetry.io/otel/trace v1.24.0 // indirect
 	go.temporal.io/api v1.38.0 // indirect
 	golang.org/x/exp v0.0.0-20231127185646-65229373498e // indirect
 	golang.org/x/net v0.28.0 // indirect

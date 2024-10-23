@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: adminweb
+  namespace: 99x
+  labels:
+    app/name: adminweb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app/name: adminweb
+  template:
+    metadata:
+      labels:
+        app/name: adminweb
+    spec:
+      containers:
+      - name: adminui
+        image: admin_web:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
+          name: http-adminweb
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: adminweb-service
+  namespace: 99x
+spec:
+  selector:
+    app/name: adminweb
+  ports:
+  - name: http
+    protocol: TCP
+    port: 8083
+    targetPort: http-adminweb
+
+# kubectl port-forward -n 99x service/adminweb-service 8083:http
+
