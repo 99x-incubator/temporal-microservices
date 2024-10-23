@@ -40,7 +40,7 @@ at this point we are not using a container registry, so the local images needs t
   ---
   resulting deployment 
 
-  ![resulting deployment ](./doc/temporal_v1.png)
+  ![resulting deployment ](./doc/temporal_v2.png)
   
   
 ---
