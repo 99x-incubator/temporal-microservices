@@ -8,6 +8,10 @@ replace 99x.io/admin_gateway v0.0.0 => ../../microservices/admin_gateway
 
 require go.temporal.io/sdk v1.29.1
 
+require 99x.io/shared v0.0.0
+
+replace 99x.io/shared v0.0.0 => ../../shared
+
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a // indirect
